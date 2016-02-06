@@ -1,5 +1,6 @@
 import scrapy
 from scrapy.http import Request
+import json
 
 class lyricsFetch(scrapy.Spider):
 	name = "lyricsFetch"
@@ -32,11 +33,11 @@ class lyricsFetch(scrapy.Spider):
 		
 	def parse(self, response):
 		
-		lyrics = response.xpath('//p[@id="lyrics_text"]/text()').extract()
-		
+		#lyrics = response.xpath('//p[@id="lyrics_text"]/text()').extract()
+		lyrics = response.xpath('//*[@id="lyrics_text"]/text()').extract()
 		with open ("lyrics.txt",'wb') as lyr:
-			lyr.write(str(lyrics))
+			lyr.write(json.dumps(str(lyrics)))
 		
 		#yield lyrics
-		
+		lyrics = json.dumps(lyrics)
 		print lyrics
